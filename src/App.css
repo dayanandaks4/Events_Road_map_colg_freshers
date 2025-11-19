@@ -28,6 +28,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  will-change: transform;
 }
 
 .orbit-container {
@@ -35,6 +36,9 @@
   width: 100%;
   height: 100%;
   transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Responsive Design */

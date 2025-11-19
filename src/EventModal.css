@@ -11,10 +11,11 @@
   align-items: center;
   z-index: 1000;
   padding: 20px;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.25s ease;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
+  will-change: opacity;
 }
 
 @keyframes fadeIn {
@@ -37,17 +38,20 @@
   overscroll-behavior: contain;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   position: relative;
-  animation: slideUp 0.3s ease;
+  animation: slideUp 0.25s ease;
   margin: auto;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes slideUp {
   from {
-    transform: translateY(50px);
+    transform: translate3d(0, 30px, 0);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 }
@@ -111,7 +115,9 @@
   padding: 20px;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  will-change: transform, background;
+  transform: translateZ(0);
 }
 
 .modal-section:hover {

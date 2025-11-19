@@ -30,7 +30,7 @@ function App() {
 
     const handleResize = debounce(() => {
       updatePositions();
-    }, 250);
+    }, 150);
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -44,7 +44,7 @@ function App() {
     setVisibleCards([0]);
     setCurrentEventIndex(0);
 
-    // Show remaining cards one by one every 5 seconds
+    // Show remaining cards one by one every 3 seconds
     const interval = setInterval(() => {
       currentIndex++;
       if (currentIndex >= eventsData.length) {
@@ -54,7 +54,7 @@ function App() {
 
       setVisibleCards((prev) => [...prev, currentIndex]);
       setCurrentEventIndex(currentIndex);
-    }, 5000); // Show each card every 5 seconds
+    }, 3000); // Show each card every 3 seconds
 
     return () => clearInterval(interval);
   }, []);
@@ -67,12 +67,14 @@ function App() {
     setOrbitRotation(newRotation);
     setCurrentEventIndex(index);
 
-    // Animate orbit rotation
+    // Animate orbit rotation with hardware acceleration
     if (orbitRef.current) {
       gsap.to(orbitRef.current, {
-        duration: 1,
+        duration: 0.8,
         rotation: newRotation,
         ease: "power2.inOut",
+        force3D: true,
+        transformPerspective: 1000,
       });
     }
 

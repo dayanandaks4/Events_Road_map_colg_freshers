@@ -26,9 +26,12 @@ body {
   color: white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-display: swap;
   position: fixed;
   touch-action: none;
   overscroll-behavior: none;
+  will-change: transform;
 }
 
 #root {

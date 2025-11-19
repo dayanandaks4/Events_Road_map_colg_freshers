@@ -12,6 +12,9 @@
     0 0 100px rgba(168, 85, 247, 0.4), 0 0 140px rgba(168, 85, 247, 0.2),
     inset 0 0 80px rgba(255, 255, 255, 0.1);
   animation: pulse-glow 3s ease-in-out infinite;
+  will-change: box-shadow;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes pulse-glow {
