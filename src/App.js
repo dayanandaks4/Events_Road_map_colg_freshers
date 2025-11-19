@@ -54,7 +54,7 @@ function App() {
 
       setVisibleCards((prev) => [...prev, currentIndex]);
       setCurrentEventIndex(currentIndex);
-    }, 3000); // Show each card every 3 seconds
+    }, 300); // Show each card every 0.3 seconds
 
     return () => clearInterval(interval);
   }, []);
@@ -84,6 +84,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1 className="main-heading">Event Roadmap </h1>
       <div className="container">
         <div className="orbit-wrapper">
           <CenterBubble currentEvent={eventsData[currentEventIndex]} />
