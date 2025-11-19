@@ -125,6 +125,15 @@
   transform: translateX(5px);
 }
 
+.program-section {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.program-section .section-content {
+  width: 100%;
+}
+
 .section-icon {
   font-size: 32px;
   flex-shrink: 0;
@@ -149,6 +158,59 @@
   color: white;
   margin: 0;
   line-height: 1.6;
+}
+
+.section-content .single-item {
+  font-size: 15px;
+  color: white;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.program-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 10px;
+}
+
+.program-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.program-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.program-list::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.5);
+  border-radius: 10px;
+}
+
+.program-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.7);
+}
+
+.program-list li {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border-left: 3px solid rgba(168, 85, 247, 0.6);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 14px;
+  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.program-list li:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-left-color: rgba(168, 85, 247, 1);
+  transform: translateX(5px);
 }
 
 .coordinator-section .coordinator-name {
@@ -248,6 +310,15 @@
   }
 
   .section-content p {
+    font-size: 13px;
+  }
+
+  .program-list {
+    max-height: 200px;
+  }
+
+  .program-list li {
+    padding: 10px 12px;
     font-size: 13px;
   }
 }
