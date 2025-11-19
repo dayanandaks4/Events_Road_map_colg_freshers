@@ -37,7 +37,7 @@
   height: 340px;
   border-radius: 50%;
   border: 2px solid rgba(168, 85, 247, 0.3);
-  animation: rotate-ring 10s linear infinite;
+  animation: rotate-ring 1s linear infinite;
 }
 
 @keyframes rotate-ring {

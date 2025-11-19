@@ -10,6 +10,7 @@ import { getOrbitRadius, calculatePosition, debounce } from "./utils";
 function App() {
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState([]);
+  const [revealedEvents, setRevealedEvents] = useState([]); // Track which events have details revealed
   const [orbitRotation, setOrbitRotation] = useState(0);
   const [cardPositions, setCardPositions] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -36,50 +37,115 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Sequential pop-in animation
+  // Sequential pop-in animation - show all cards quickly in circle order
   useEffect(() => {
-    let currentIndex = 0;
+    // Sort events by angle to ensure proper circle order
+    const sortedIndices = eventsData
+      .map((event, index) => ({ index, angle: event.angle }))
+      .sort((a, b) => a.angle - b.angle)
+      .map((item) => item.index);
+
+    let currentStep = 0;
 
     // Show first card immediately
-    setVisibleCards([0]);
-    setCurrentEventIndex(0);
+    const firstIndex = sortedIndices[0];
+    setVisibleCards([firstIndex]);
 
-    // Show remaining cards one by one every 3 seconds
+    // Show remaining cards one by one every 0.3 seconds in circle order
     const interval = setInterval(() => {
-      currentIndex++;
-      if (currentIndex >= eventsData.length) {
+      currentStep++;
+      if (currentStep >= sortedIndices.length) {
         clearInterval(interval);
         return;
       }
 
-      setVisibleCards((prev) => [...prev, currentIndex]);
-      setCurrentEventIndex(currentIndex);
-    }, 300); // Show each card every 0.3 seconds
+      const nextIndex = sortedIndices[currentStep];
+      setVisibleCards((prev) => [...prev, nextIndex]);
+    }, 300); // Pop up each card every 0.3 seconds
 
     return () => clearInterval(interval);
   }, []);
 
-  // Handle card click
-  const handleCardClick = (index, angle) => {
-    const rotationNeeded = -angle;
-    const newRotation = orbitRotation + rotationNeeded;
+  // Rotate the orbit container clockwise after all cards pop up
+  useEffect(() => {
+    let rotationInterval;
 
-    setOrbitRotation(newRotation);
+    // Wait for all cards to pop up (12 cards * 300ms = 3600ms + 200ms buffer)
+    const startTimer = setTimeout(() => {
+      rotationInterval = setInterval(() => {
+        setOrbitRotation((prev) => prev + 0.2); // Faster clockwise rotation
+      }, 20); // Update every 20ms for smooth animation
+    }, 3800);
+
+    return () => {
+      clearTimeout(startTimer);
+      if (rotationInterval) clearInterval(rotationInterval);
+    };
+  }, []);
+
+  // Real-time based event reveal - check every 10 seconds
+  useEffect(() => {
+    const checkEventTimes = () => {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+
+      const revealed = [];
+      let latestEventIndex = 0;
+
+      eventsData.forEach((event, index) => {
+        // Parse event time (e.g., "7:30 AM – 8:00 AM")
+        const timeMatch = event.time.match(/(\d+):(\d+)\s*(AM|PM)/);
+        if (timeMatch) {
+          let eventHour = parseInt(timeMatch[1]);
+          const eventMinute = parseInt(timeMatch[2]);
+          const period = timeMatch[3];
+
+          // Convert to 24-hour format
+          if (period === "PM" && eventHour !== 12) {
+            eventHour += 12;
+          } else if (period === "AM" && eventHour === 12) {
+            eventHour = 0;
+          }
+
+          // Check if current time has passed the event start time
+          if (
+            currentHour > eventHour ||
+            (currentHour === eventHour && currentMinute >= eventMinute)
+          ) {
+            revealed.push(index);
+            latestEventIndex = index;
+          }
+        }
+      });
+
+      // If no events have started yet, show all as coming soon
+      if (revealed.length === 0) {
+        setRevealedEvents([]);
+        setCurrentEventIndex(0);
+      } else {
+        setRevealedEvents(revealed);
+        setCurrentEventIndex(latestEventIndex);
+      }
+    };
+
+    // Check immediately
+    checkEventTimes();
+
+    // Check every 10 seconds
+    const interval = setInterval(checkEventTimes, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Handle card click - no rotation, just update center and open modal
+  const handleCardClick = (index, angle) => {
     setCurrentEventIndex(index);
 
-    // Animate orbit rotation with hardware acceleration
-    if (orbitRef.current) {
-      gsap.to(orbitRef.current, {
-        duration: 0.8,
-        rotation: newRotation,
-        ease: "power2.inOut",
-        force3D: true,
-        transformPerspective: 1000,
-      });
+    // Open modal with event details only if revealed
+    if (revealedEvents.includes(index)) {
+      setSelectedEvent(eventsData[index]);
     }
-
-    // Open modal with event details
-    setSelectedEvent(eventsData[index]);
   };
 
   return (
@@ -87,7 +153,10 @@ function App() {
       <h1 className="main-heading">Event Roadmap </h1>
       <div className="container">
         <div className="orbit-wrapper">
-          <CenterBubble currentEvent={eventsData[currentEventIndex]} />
+          <CenterBubble
+            currentEvent={eventsData[currentEventIndex]}
+            revealed={revealedEvents.includes(currentEventIndex)}
+          />
 
           <div
             ref={orbitRef}
@@ -101,6 +170,7 @@ function App() {
                 event={event}
                 index={index}
                 visible={visibleCards.includes(index)}
+                revealed={revealedEvents.includes(index)}
                 position={cardPositions[index] || { x: 0, y: 0 }}
                 rotation={-orbitRotation}
                 onCardClick={handleCardClick}

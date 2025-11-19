@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import "./EventCard.css";
 
 const EventCard = memo(
-  ({ event, index, visible, position, rotation, onCardClick }) => {
+  ({ event, index, visible, revealed, position, rotation, onCardClick }) => {
     const cardRef = useRef(null);
     const hasAnimated = useRef(false);
 
@@ -39,16 +39,17 @@ const EventCard = memo(
       }
     }, [visible, position.x, position.y, rotation]);
 
-    // Update position and rotation when they change (after initial animation)
+    // Update position when it changes (after initial animation)
     useEffect(() => {
       if (visible && cardRef.current && hasAnimated.current) {
         gsap.to(cardRef.current, {
           x: position.x,
           y: position.y,
           rotation: rotation,
-          duration: 0.25,
-          ease: "power2.out",
+          duration: 0,
+          ease: "none",
           force3D: true,
+          overwrite: "auto",
         });
       }
     }, [position.x, position.y, rotation, visible]);
@@ -56,15 +57,25 @@ const EventCard = memo(
     return (
       <div
         ref={cardRef}
-        className={`event-card ${visible ? "visible" : ""}`}
+        className={`event-card ${visible ? "visible" : ""} ${
+          !revealed ? "rotating" : ""
+        }`}
         data-index={index}
         data-angle={event.angle}
         onClick={handleClick}
       >
         <div className={`card-content ${event.gradient}`}>
           <div className="event-icon">{event.icon}</div>
-          <h3>{event.title}</h3>
-          <p>{event.time}</p>
+          {revealed ? (
+            <>
+              <h3>{event.title}</h3>
+              <p>{event.time}</p>
+            </>
+          ) : (
+            <>
+              <h3 className="coming-soon-text">Coming Soon</h3>
+            </>
+          )}
         </div>
       </div>
     );

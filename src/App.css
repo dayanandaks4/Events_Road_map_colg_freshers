@@ -6,6 +6,47 @@
   position: fixed;
   top: 0;
   left: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Optimize for mobile */
+@media (max-width: 768px) {
+  .App {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+.main-heading {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  z-index: 100;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: fadeInDown 1s ease-out;
+  margin: 0;
+  padding: 0 20px;
+  width: 100%;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 .container {
@@ -16,6 +57,7 @@
   align-items: center;
   position: relative;
   padding: 20px;
+  padding-top: 120px;
   box-sizing: border-box;
   overflow: hidden;
   touch-action: none;
@@ -41,8 +83,57 @@
   backface-visibility: hidden;
 }
 
+/* Faster transitions on mobile */
+@media (max-width: 768px) {
+  .orbit-container {
+    transition: transform 0.6s ease-out;
+  }
+}
+
 /* Responsive Design */
+@media (min-width: 1920px) {
+  .orbit-wrapper {
+    width: 1200px;
+    height: 1200px;
+  }
+
+  .main-heading {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .orbit-wrapper {
+    width: 1100px;
+    height: 1100px;
+  }
+
+  .main-heading {
+    font-size: 2.8rem;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1439px) {
+  .orbit-wrapper {
+    width: 900px;
+    height: 900px;
+  }
+
+  .main-heading {
+    font-size: 2.5rem;
+  }
+}
+
 @media (max-width: 1024px) {
+  .main-heading {
+    font-size: 2rem;
+    top: 20px;
+  }
+
+  .container {
+    padding-top: 100px;
+  }
+
   .orbit-wrapper {
     width: 700px;
     height: 700px;
@@ -54,8 +145,15 @@
     overflow: hidden;
   }
 
+  .main-heading {
+    font-size: 1.5rem;
+    top: 15px;
+    letter-spacing: 1px;
+  }
+
   .container {
     padding: 10px;
+    padding-top: 80px;
     height: 100vh;
   }
 
@@ -68,8 +166,15 @@
 }
 
 @media (max-width: 480px) {
+  .main-heading {
+    font-size: 1.2rem;
+    top: 12px;
+    letter-spacing: 0.5px;
+  }
+
   .container {
     padding: 8px;
+    padding-top: 65px;
     height: 100vh;
   }
 
@@ -82,8 +187,15 @@
 }
 
 @media (max-width: 360px) {
+  .main-heading {
+    font-size: 0.95rem;
+    top: 8px;
+  }
+
   .container {
     padding: 5px;
+    padding-top: 55px;
+    height: 100vh;
   }
 
   .orbit-wrapper {

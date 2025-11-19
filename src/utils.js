@@ -17,11 +17,19 @@ export const getOrbitRadius = () => {
     return minDimension * 0.26;
   }
   if (width <= 1024) {
-    // Small desktops
-    return 300;
+    // Medium screens - laptop
+    return 320;
   }
-  // Large desktops - make it much wider for proper spacing
-  return 420;
+  if (width <= 1440) {
+    // Standard desktop
+    return 400;
+  }
+  if (width <= 1920) {
+    // Large desktop/Full HD
+    return 450;
+  }
+  // Extra large screens - 2K, 4K
+  return 500;
 };
 
 // Calculate X and Y position for an event card based on angle and radius
