@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Freshers Party Event Timeline</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="orbit-wrapper">
+        <!-- Center Bubble (Current Event) -->
+        <div class="center-bubble">
+          <div class="glow-ring"></div>
+          <div class="bubble-content">
+            <div class="event-icon">🎭</div>
+            <div class="current-label">CURRENT EVENT</div>
+            <h2 class="event-title">Drama Festival</h2>
+            <p class="event-time">Nov 30, 5:00 PM - 9:00 PM</p>
+            <button class="explore-btn">CLICK EVENTS TO EXPLORE</button>
+          </div>
+        </div>
+
+        <!-- Event Cards in Orbit -->
+        <div class="orbit-container">
+          <!-- Event 1: Fashion Show -->
+          <div class="event-card" data-index="0" data-angle="0">
+            <div class="card-content gradient-orange">
+              <div class="event-icon">👗</div>
+              <h3>Fashion Show</h3>
+              <p>Dec 15, 6:00 PM - 9:00 PM</p>
+            </div>
+          </div>
+
+          <!-- Event 2: Literature Quiz -->
+          <div class="event-card" data-index="1" data-angle="30">
+            <div class="card-content gradient-purple">
+              <div class="event-icon">📚</div>
+              <h3>Literature Quiz</h3>
+              <p>Nov 19, 3:00 PM - 5:30 PM</p>
+            </div>
+          </div>
+
+          <!-- Event 3: Sports Tournament -->
+          <div class="event-card" data-index="2" data-angle="60">
+            <div class="card-content gradient-coral">
+              <div class="event-icon">⚽</div>
+              <h3>Sports Tournament</h3>
+              <p>Nov 20</p>
+            </div>
+          </div>
+
+          <!-- Event 4: Poetry Slam -->
+          <div class="event-card" data-index="3" data-angle="90">
+            <div class="card-content gradient-pink">
+              <div class="event-icon">🎤</div>
+              <h3>Poetry Slam</h3>
+              <p>Dec 8, 4:00 PM</p>
+            </div>
+          </div>
+
+          <!-- Event 5: Art Workshop -->
+          <div class="event-card" data-index="4" data-angle="120">
+            <div class="card-content gradient-pink-light">
+              <div class="event-icon">🎨</div>
+              <h3>Art Workshop</h3>
+              <p>Dec 14, 2:00 PM</p>
+            </div>
+          </div>
+
+          <!-- Event 6: Dance Competition -->
+          <div class="event-card" data-index="5" data-angle="150">
+            <div class="card-content gradient-pink-purple">
+              <div class="event-icon">💃</div>
+              <h3>Dance Competition</h3>
+              <p>Dec 12, 4:00 PM - 8:00 PM</p>
+            </div>
+          </div>
+
+          <!-- Event 7: Cooking Challenge -->
+          <div class="event-card" data-index="6" data-angle="180">
+            <div class="card-content gradient-red">
+              <div class="event-icon">🍳</div>
+              <h3>Cooking Challenge</h3>
+              <p>Dec 10, 11:00 AM - 2:00 PM</p>
+            </div>
+          </div>
+
+          <!-- Event 8: Photography Contest -->
+          <div class="event-card" data-index="7" data-angle="210">
+            <div class="card-content gradient-purple-dark">
+              <div class="event-icon">📷</div>
+              <h3>Photography Contest</h3>
+              <p>Dec 8, 9:00 AM - 5:00 PM</p>
+            </div>
+          </div>
+
+          <!-- Event 9: Sketching Exhibition -->
+          <div class="event-card" data-index="8" data-angle="240">
+            <div class="card-content gradient-red-pink">
+              <div class="event-icon">✏️</div>
+              <h3>Sketching Exhibition Day</h3>
+              <p>Dec 5</p>
+            </div>
+          </div>
+
+          <!-- Event 10: Coding Marathon -->
+          <div class="event-card" data-index="9" data-angle="270">
+            <div class="card-content gradient-teal">
+              <div class="event-icon">💻</div>
+              <h3>Coding Marathon</h3>
+              <p>Dec 5-6, 3:00 AM - 9:00 AM</p>
+            </div>
+          </div>
+
+          <!-- Event 11: Music Concert -->
+          <div class="event-card" data-index="10" data-angle="300">
+            <div class="card-content gradient-yellow">
+              <div class="event-icon">🎵</div>
+              <h3>Music Concert</h3>
+              <p>Dec 6, 6:30 PM - 9:00 PM</p>
+            </div>
+          </div>
+
+          <!-- Event 12: Drama Festival -->
+          <div class="event-card" data-index="11" data-angle="330">
+            <div class="card-content gradient-blue">
+              <div class="event-icon">🎭</div>
+              <h3>Drama Festival</h3>
+              <p>Nov 30, 5:00 PM - 9:00 PM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
